@@ -1,0 +1,711 @@
+﻿/*/
+*--*js是什么？？？
+  *javascript：主要是为了网页交互而是设计的一种轻量级脚本语言
+
+  /*其包括： ECMAscript(第5版本) :变量,命名规范,数据类型,操作语句等核心的语法知识
+           DOM(document object model)文档对象模型 -- 提供了操作页面元素常用的属性和方法  document -- 文档
+           BOM(browser object model )浏览器对象模型 -- 提供了浏览器常用的属性和方法  window -- 浏览器
+
+*--*js引入到页面的方式
+1.行内式（不推荐）
+2内嵌式
+3.外链式---><script src="index.js"></script>
+
+*--*js的输出方式
+1.alert -页面中直接弹出你要输出的内容；缺点：不宜打印对象
+2.confirm('你要输出的内容')--》返回值：确定-true； 取消-false；
+3.console.dir(); 可以输出一个对象所有的属性和方法；
+4.console.log(); 只可以打印出来这个对象所属的标签 与alert 相比，可以把对象完整打印出来；
+5.console.table();
+6.页面输出的两种方式：
+    document.write() 注意：如果在window.onload事件里，输出document.write(''),会清空页面中以前所有的内容；
+    obj.innerHtml->输出任意标签中包裹的内容（即使隐藏的元素，它的内容也能输出）
+
+*--*js中的事件
+系统事件 window.onload--等页面元素都加载完成才开始执行JS；
+鼠标事件：onmouseover(鼠标移入) onmouseout(鼠标移出) onclick(点击事件)
+表单事件
+键盘事件
+自定义事件
+
+给元素绑定click(鼠标点击)的事件
+     var oDiv = document.getElementById("div1");
+     oDiv.onclick = function (){
+         alert("hello");
+     }
+  /*/以上是对点击事件click的演示；想点击谁给谁绑定事件
+
+
+    /*/  数据  /*/
+
+基本类型  和  引用数据类型
+    a：基本数据类型是：值类型的数据都是保存在栈内存里的,特点:体积小,速度快
+    b:引用类型的数据都是保存在堆内存里的,特点:体积大,速度慢
+
+*检测数据是什么数据类型typeof  直接在控制台输入
+typeof + 数据    typeof 'sss'--->得出结果是string
+
+*instanceof  检测一个对象属于哪个类的实例(可以检测出对象的细分类型) 如果是的话返回true,不是的话返回false
+   console.log(数据 instanceof Array);true
+   console.log(数据 instanceof RegExp);false;
+
+
+*--*
+一.基本数据类型包括：number（数字类型）、string（字符串）、boolean（布尔类型）、null（null类型，代表现在没有以后会有‘空的’）、undefined（undefined类的 没有）
+注释//   = 赋值  == 比较 (==左右的值相比较)
+
+*/*1.基本数据类型 number  知识点
+
+1）.什么情况下值的类型会是number类型?
+    整数(正整数,负整数,0),小数,NaN(not a number 不讲理的数)
+
+2）.什么情况下得出的结果会是NaN？
+  a.做数学运算(+,-,*,/,%)失败的时候
+  b.强制将其他数据类型转换成number类型失败的时候 (Number(),parseInt(),parseFloat())
+  c.NaN == NaN -->false  NaN是一个笼统的概念,并不是表示具体的一个值,和任何值比较的时候都不相等(包括它自己);
+
+3）.怎么判断这个值是否是有效数字？
+  理解1.isNaN() 如果是有效数字返回的是false,不是有效数字返回的就是true;
+  理解2.isNaN() 是一个非有效数字吗？ 非有效数字：true；(如果传参是非有效数字-会自动转换) 有效数字：false；
+  用法：isNaN()检测分为两大步:1.Number()强制转换成数类型的2.isNaN()去检测
+
+4）.Number 强制将数据转换为number类型
+  用法：
+    boolean类型的值(true/false) Number(true) ->1  Number(false) ->0
+    number类型的值是简单的传入和传出
+    null --Number(null)->0
+    undefined -- Number(undefined)-->NaN
+    "字符串"  -- Number("") --> 0 其他的字符串,只要有一个字符不是数字(除.以外),结果就是NaN
+
+5）.parseInt 和parseFloat将字符串类型转换成数类型  （非强制）
+  a.parseInt(整数) 是将字符串的整数部分提取出来
+
+  b.parseFloat(浮点数)是除了能将字符串的整数部分提取出来,还能将小数部分提取出来
+     缺点：小数保留位数太多；
+     解决的方法：数字.toFixed(小数位数)
+     特点：1.保留你要的小数位数 2.四舍五入
+
+
+
+*/*2.基本数据类型 string  知识点
+1）.什么是字符串？
+   双引号或者单引号包起来的就是字符串
+   //注释：单引号或者双引号必须是成对出现的,不成对出现就会报错!
+
+   个人建议：属性值用“”，字符串 '';
+2）.字符串和变量有什么区别？
+   字符串有引号，变量没有
+
+3）.字符串创建的两种方式：
+   var str1='1233453536';//字面量方式
+   var str2=new String('123');//实例创建方式
+   字面量创建的字符串也可以操作所有的属性和方法，只是我们只能用console.dir()打印出实例创建出来的对象字符串；
+
+4）. \用来表示转义  \\-->\  \" -->"  \'-->' \r-->(回车)  \n-->(换行)  \t-->(制表符)
+
+5）字符串的用法
+   1.通过索引来查找对应的字符或者编码
+     * 1）.chaeAt（下标）通过下标找到对应的字符
+     * 2).charCodeAt(下标)通过下标找到对应的ASCII值
+   2.通过字符串找到对应的下标
+     * 1).indexOf（''）通过字符串从前往后找
+     * 2).lastIndexOf（''）通过字符串从后往前找    indexOf,lastIndexOf如果找不到返回的都是-1
+   3.字符串截取
+     * *1.str.substr（n,m）n:索引m:个数
+     * *2.str.substring(n,m)从索引n开始截取；截取到第m个（包前不包后）
+     * *3.str.slice(-4)  用法同substring相同，但是他可以取负值
+     * *4.字符串拆分-->字符串转数组str.split（'切分符'）
+     * *5.字符串替换  str.replace（被替换的jiu，要替换的xin）
+     * *6.大小写转换   str.toUpperCase();-转成大写     str.toLowerCase();-转成小写
+
+
+
+*/*3. 基本数据类型 之  array 数组类型
+
+a.数组也是对象类型的,把对象里属性名是数字的单独独立出来(独立成数组),为了能够方便操作
+      b.在数组这边数字属性名称为是索引,并且索引是隐藏的,数组是有序排列的集合,第一项索引时候0,第二项索引就是1,第三项就是2.....最后一项 ary.length-1
+
+******数组常用的方法
+
+     以下方法都是原有数组发生了改变
+     var ary=[1,2,32,23,4,3];
+       1.push()往数组末尾添加一项内容,参数:添加的内容 返回值:添加完内容后数组的长度(既：添加完内容的索引)
+       2.pop(ary[i])把数组的最后一项内容删除,没有参数 返回值:删除的内容
+       3.shift()删除数组的第一项内容,没有参数 返回值:删除的内容;用法：ary.shift（）
+       4.unshift()将内容添加到数组的首位置,参数:添加的内容, 返回值:添加完内容后数组的长度（length）
+
+       5.原生的往数组的末尾添加一项内容和删除最后一项内容的办法
+        a.添加：
+             ary[ary.length] = 5;//往最后一项的后面添加内容,最后一项的后面的索引就是ary.length
+        b.删除：ary.length--
+
+        6.splice
+         a. splice(n) 从索引n的位置一直删除到最后 ,返回值:删除的内容
+         b. splice(n,m)从索引n的位置开始一直删除m个 ,返回值:删除的内容
+         c. splice(n,m,x)从索引n的位置开始一直删除m个,用x(可以是一项也可以是多项)的内容替换删除的内容
+
+       7.reverse() 将数组倒着排列,返回值:倒着排列后的数组
+
+       8.sort() 10以内的数字可以从小到大排列大于        10就不行
+         解决方法：
+         ary.sort(function(a,b){
+          //a表示数组的前一项；b表示数组的后一项
+                return a-b;// 从小到大
+                return b-a; //从大到小
+                 });
+
+       以下的方法是原数组没有发生改变
+       9.slice
+         a.slice(n) 从索引n开始截取,一直截取到最后
+         b.slice(n,m) 从索引n开始截取,一直截取到索引m(包前不包后,包含索引n这一项,不包含索引m这一项)
+         c.slice的参数可以是负数 (这时的索引 = 负数索引+数组的长度)
+        //返回值:截取的新的数组,原数组是不发生改变
+
+        10.indexOf()和lastIndexOf()
+         //ie6-ie8不兼容
+        a. indexOf(n)从数组的前面往后找,如果不能找到返回-1,如果能找到,则返回这一项的索引值
+        b. lastIndexOf(n) 从数组的后面往前面找,如果不能找到返回-1,如果能找到,则返回这一项的索引值
+        //这两个方法就可以判断数组里是否有这一项的存在
+
+     ///***///数组的应用方法
+ 1.数组去重
+        方法一:通过双for循环去重
+          第一次  第一项和第二项及以后的数比较,如果发现重复的,则从数组中删除重复的项
+          第二次  第二项和第三项及以后的数比较,如果发现重复的,则从数组中删除重复的项
+          第三次  第三项和第四项及以后的数比较
+          当到最后一项的时候,就不会去比较了,因为最后一项的后面没有了,所以共比较ary.length-1
+
+      代码：var ary = [1,2,33,33,33,4,2,1]
+        for(var i = 0;i<ary.length-1;i++){
+          //控制比较多少次,控制着起始比较的那一项
+          for(var j = i+1;j<ary.length; j++){
+             if(ary[i]==ary[j]){
+                  ary.splice(j,1);//从数组里删除索引是j的这一项 会发生数组的塌陷
+                  j--; //这样索引就没有发生变化
+                    }
+                }
+            }
+            console.log(ary);
+
+       方法二：利用对象的原理去重
+           //把数组的每一项分别作为对象的属性名和属性值存在对象里
+           //如果发现对象里已经存了这一项,说明这一项就是重复,则把这一项删掉
+      代码：var ary = [1,2,33,33,33,4,2,1]
+            var  obj = {};//{1:1,2:2,33:33}
+            for(var i = 0;i<ary.length;i++){
+                var cur = ary[i];
+               //数组里的每一项cur -->33
+             if(obj[cur] == cur){
+                //如果相等说明是重复的
+                   ary.splice(i,1);//数组的塌陷
+                 i--;}
+             else{
+                 obj[cur] = cur;
+                 }
+            }
+        obj = null;//对象释放掉
+
+ 2.冒泡排序原理
+          冒泡排序的原理:像气泡一样一个一个往上冒,轻的在上面,重的在下面
+         在数组这边,小的在前面,大的在后面
+
+
+        var ary = [34,12,2,7,18];
+           两两比较,如果前者比后者大,则它两交换位置
+            //每轮比较都是把最大的值排到最后去
+            //比较多少轮 每轮多少次
+            //怎么样两两交换数据
+
+
+            //数组的长度是5,现在循环了四次(0-3)
+            //每轮两两比较的次数是递减的
+       for(var j = 0;j<ary.length-1;j++){//一共执行多少轮
+          for(var i = 0;i<ary.length-1-j;i++){ //每轮执行多少次
+           var temp = null;
+            if(ary[i]>ary[i+1]){
+                    temp = ary[i];
+                    ary[i] = ary[i+1];
+                    ary[i+1] = temp;
+                 }
+               }
+               console.log(ary);
+           }
+ 3.快速排序:
+  思想：1.选一个基准点,基准点一般选择中间的这一项
+        2.再让中间这一项和其他的项进行比较,如果比中间这一项小则放在左边,如果比中间这一项大则放在右边
+        3.重复的执行上面两个步骤,直到中间项左右只有一项或者没有内容时结束
+   代码：
+  var ary = [12,3,45,13,43,32,45,56,77];
+         function quickSort(ary){
+             //如果左右两边只有一项或者没有
+             if(ary.length<=1){
+                 return ary;
+             }
+
+             //得到基准点的索引 9/2=Math.floor(4.5)
+             var pointIndex = Math.floor(ary.length/2);
+             //得到中间这一项,并且从原数组中删除
+             var pointValue = ary.splice(pointIndex,1);
+             var centerValue = pointValue[0];//中间这一项的值
+             var left = [];
+             var right = [];
+             //console.log(ary);//[12, 3, 45, 13, 32, 45, 56, 77]
+             //console.log(pointValue);//[43]
+             //中间这一项和其他项进行比较
+             for(var  i = 0;i<ary.length;i++){
+                 var cur = ary[i];
+                 cur<centerValue?left.push(cur):right.push(cur);
+             }
+
+             return quickSort(left).concat(pointValue,quickSort(right));
+
+         }
+        console.log(quickSort(ary));
+ 4.插入排序
+  插入排序的思想
+    首先拿出第一张牌放在左手
+    依次将其他的牌拿出来跟左手的牌倒着比较,从左手的倒数第一张牌开始比较,如果左手的牌比当前拿的牌大,则一直往前比较....直到遇到左手的牌比当前这张牌大,如果一直比到头也没发现比当前这张牌小,则把当前这张牌放在首位置
+
+      var ary = [6, 3, 7, 6, 2, 4];
+      function insertSort(ary) {
+          var left = [];//左手
+          //ary.splice(0,1)->[6]
+          var res = ary.splice(0, 1)[0];//
+          left.push(res);
+          for (var i = 0; i < ary.length; i++) {
+              var cur = ary[i];//当前拿的牌
+              //分别和左手的每一项倒着比较
+              for (var j = left.length - 1; j >= 0;) {
+                  //left[j]左手拿的牌
+                  if (left[j] > cur) {
+                      j--;
+                      if (j == -1) {//已经比到头也没发现比当前这张牌小的
+                          left.unshift(cur);
+                      }
+                  } else {
+                      //把当前拿着的这张牌放到左手这张牌的后面的牌的前面
+                      left.splice(j + 1, 0, cur);
+                      break;//退出本层循环
+                  }
+              }
+          }
+          return left;
+      }
+
+      console.log(insertSort(ary));
+
+
+
+*/*4.基本数据类型 boolean  知识点
+1）.布尔boolean 是干什么用的？
+   boolean是做判断用的，他有两个值
+      true（是真的）
+      false（是假的）
+   a.例子：var  s=2
+           var  b=3
+          s<b 这时就代表是真的，则输出是true
+          s>b 这时就代表是假的，则输出是false
+2）.布尔值的五种转换
+  a.Boolean()强制将其他数据类型转boolean类型
+    0,NaN,null,undefined,""转换boolean型时
+    是false,其他的全部是true;
+  b.!的意思是取反
+  c.！！取反在取反
+  d.if(只有一个值的时候，自动转换布尔值)
+  e.if（运算表达式）注释//if（''==0）
+
+*/*5.null
+*/*6.undefined
+
+
+
+*--*
+一.引用数据类型：分为对象类型 和 特书类型/函数类型function（）{}；
+
+1.对象类型又分为 数组（array[]）、对象（object{}）、正则（regExp/^$/）、null（在对象类型中他只是一个空的对象）
+
+**--**1）.数组
+
+**--**2).对象类型：
+  对象数据类型的存在多对键值对(属性名和属性值),每个键值对之间以逗号隔开
+   var obj = {"width":"10px"height:"20px",gender:true,age:18,fn:function(){},0:"aa",1:"bb",2:"cc"};//字面量的方式
+            //在普通对象里,属性名可以写双引号,也可以不写
+       // var obj = new Object()//通过实例的方式创建
+
+   ***操作对象：增删改查
+       a.增加属性：obj.hobby=睡觉
+                  obj.[hobby]=睡觉
+       b.查找：通过打印的方式查找
+             console.log(obj.width)
+             console.log(obj[属性名])
+       c.修改：如果有这个属性存在的话；那么就是更改这个属性值obj.width='20px';如果没有就是增加属性
+       d.删除：分为真删假删
+       假删：obj.width=null
+       真删：delete obj[width];
+
+ **for...in...遍历对象
+ var obj={name：'大哥'；height：'180cm'}
+ for(var ary in obj){
+ console.log(ary)//这个输出是属性名
+ console.log(obj[ary])//这个是输出的属性值
+        }
+
+
+**--**3）.Math
+   Math：数学对象  用来处理数字的
+   用法：
+     Math:数学对象  用来处理数字的
+       Math常用方法：
+       Math.round(2.1) 四舍五入
+       Math.floor(2.6) 向下取整6
+       Math.ceil(2.1) 向上取整
+       Math.abs(-100) 绝对值
+       Math.sqrt(16) 开平方
+       Math.pow(2,3) 幂次方
+       Math.max(2,18,1,90) 一组数据中找到最大值
+       Math.min(2,18,1,90) 一组数据中找到最小值
+       Math.random() 从0-1（不包含1）的随机小数
+       随机数公式：Math.random（）*（大-小）+小
+       不要最大值：Math.floor（Math.random（）*（大-小）+小）
+       可能会有最大值：.Math.round（Math.random（）*（大-小）+小）
+
+**--**4）.Date
+now.getTime() 获得当前时间距离1970 00 :00 的毫秒数
+new Date() 得到的时间，是我们自己电脑上的时间，不能拿来当作参考标准；
+oDate.getFullYear() 获取年份
+oDate.getMonth()+1 获取月份
+oDate.getDate();获取日
+oDate.getDay(); 获取星期
+oDate.getHours();小时
+oDate.getMinutes(); 分钟
+oDate.getSeconds(); 秒
+new Date().getTime():当前距离1970年1月1日 00:00:00:00的毫秒数 格林尼治时间
+new Date(xxxx/xx/xx/ 00:00:00).getTime() :未来距离1970年1月1日 00:00:00:00的毫秒数
+
+
+//定时器
+ window.setTimeout([function(){}]duration) -->只执行一次
+ window.setInterval([function(){}],1000)-->每隔1s运行一次(每隔1s就调用下自身)
+
+清除定时器
+  window.clearTimeout(定时器的编号)
+  window.clearInterval(定时器的编号)
+
+
+
+
+
+
+2.函数类型function（）{}
+function原本也是对象类型的,但是比较特殊,因此单独独立成特殊类型(function类型)
+
+/方法的定义
+    function 方法名(){
+        方法体/函数体
+    }
+    //方法的执行  方法名();
+
+    //function的作用(一个功能需要多次反复使用的时候)
+    /*
+    * 1.用来封装相同的功能(封装代码)
+    * 2.防止代码重复
+    * 3.当使用的时候,不需要重新编写,只需要执行下代码即可
+    * 4.创建私有的变量
+    * 5.构建闭包的机制
+
+
+
+/************************/
+
+循环语句
+
+for循环  for in   while；do...while
+for和while用法不同：
+    for-当执行次数已知的情况下；
+    while-当执行次数未知的情况下同他；
+    do..while-无论条件是否成立，都会先执行一次；以后的执行取决于条件是否成立；
+
+一、 for循环四部曲：
+    1.设置循环语句的初始值
+    2.设置循环条件
+    3.如果满足循环条件,则循环体里的内容,
+      不满足条件,则退出循环
+    4.执行累加或累减操作
+
+    <ul id="list">
+            <li>1111</li>
+            <li>2222</li>
+            <li>3333</li>
+            <li>44444</li>
+        </ul>
+   思路：我想让每个li赋有red这个属性
+
+var oUl = document.getElementById("list");
+var oLis = oUl.getElementsByTagName("li")
+ for（var i=0;i<oLis.length;i++）{
+       oLis[i].style.backgroundColor='red'
+        //在for循环里循环oLi这个元素
+ }
+
+ ---****---
+   案例选项卡例子一
+<div id="tab">
+    <ul>
+        <li >选项卡一</li>
+        <li >选项卡二</li>
+        <li >选项卡三</li>
+        <li >选项卡四</li>
+    </ul>
+    <div >内容一</div>
+    <div >内容二</div>
+    <div >内容三</div>
+    <div>内容四</div>
+</div>
+<script>
+var oTab = document.getElementById("tab");
+       var oLis = oTab.getElementsByTagName("li");
+       var oDivs = oTab.getElementsByTagName("div");
+       for(var i = 0;i<oLis.length;i++){
+           oLis[i].zhufeng = i;
+           oLis[i].onclick = function(){
+               changTab(this.zhufeng);
+           }
+       }
+       function changTab(n){
+           for(var i = 0;i<oLis.length;i++){
+               oLis[i].className = "";
+               oDivs[i].className = "";
+           }
+           oLis[n].className = "selectLi";
+           oDivs[n].className = "selectDiv";
+       }
+</script>
+
+    案例二.99表
+     1.实现九九乘法表 2.实现隔行变色
+     九九乘法表规律 : *前面的数表示列(row) *后面的数表示行(column)
+    var oUl = document.getElementById("list");
+       var str = "";
+       for (var c = 1; c <= 9; c++) {//遍历行
+           //遍历行的时候,给奇数行增加类名odd,给偶数行增加类名even
+           if(c%2==1){
+               str += "<li class='odd'>";
+           }else{
+               str += "<li class='even'>";
+           }
+           //每行里列遍历的次数等于行号
+           for(var r = 1;r<=c;r++){ //遍历列
+               str+=r+"*"+c+"="+r*c+" ";
+           }
+           str += "</li>";
+       }
+
+       oUl.innerHTML = str;
+
+
+二、while循环
+  var i=1;
+      while(i<=9){
+          //document.write(i+'=>');
+          var j=1;
+          while(j<=i){
+             document.write(j+'*'+i+'='+i*j+'&nbsp;');
+             j++;
+          }
+          document.write('<br/>')
+          i++;
+      }
+
+三、do...while
+var i=1;
+    do{
+       // document.write(i+'=>');
+        var j=1;
+        do{
+            document.write(j+'*'+i+'='+i*j+'&nbsp;');
+            j++;
+        }while(j<=i)
+        document.write('<br/>')
+        i++;
+    }while(i<=9)
+ /**********/
+判断语句
+语法：if...else if...else if... else
+ if(条件1){
+         条件1成功执行这边;
+         下面的else if和else里的语句都不再执行
+     }else if(条件2){
+         条件1不成功,才会这边这边
+         条件2成功执行这边
+         下面的else if和else里的语句都不再执行
+     }else if(条件3){
+         条件1,条件2都不成功
+         条件3成功执行这边
+         下面else语句不再执行
+     }else{
+         条件1,条件2,条件3都不成功则执行这边
+     }
+
+switch 语句
+switch 语句 一个表达式有多种值多种情况的处理 (多条分支处理);
+    //case下面的语句执行完之后要加break表示退出整个switch语句,如果不加break,会忽视case后面的值,直接执行下面的语句
+
+var  day = 2;
+    switch (day) {  //day===1
+     case 1 :
+            alert(1);
+            console.log("星期一");
+            break;//跳出switch语句,下面的语句都不再执行
+        case 2 :
+            alert(2);
+            console.log("星期二");
+            break;
+        case 3 :
+            console.log("星期三");
+            break;
+        case 4 :
+            console.log("星期四");
+            break;
+        case 5 :
+            console.log("星期五");
+            break;
+        case 6 :
+            console.log("星期六");
+            break;
+        default :
+            console.log("星期日");
+    }
+
+
+自定义属性
+
+<!--
+自定义属性：在元素标签上自己定义一个属性名和属性值；
+问题：浏览器在加载页面的时候，会自动过滤掉他不认识的属性和属性值；
+解决办法：浏览器加载完成后，我们通过JS来动态加载属性和属性值；
+需求1：页面上有四个按钮，每个按钮点击的时候都弹出他对应的索引值；
+    实现此需求两种方式：1.自定义属性  2.自执行函数（闭包）
+-->
+<div id="div">
+    <input type="button" value="按钮1"/>
+    <input type="button" value="按钮2"/>
+    <input type="button" value="按钮3"/>
+    <input type="button" value="按钮4"/>
+</div>
+<script>
+    /*var oBtn=document.getElementById('btn1');
+    //console.dir(oBtn)
+   // alert(oBtn.type)
+    alert(oBtn.abc)*/
+    var oDiv=document.getElementById('div');
+    var aBtn=oDiv.getElementsByTagName('input');
+
+    /*for(var i=0; i<aBtn.length; i++){
+        aBtn[i].index=i;
+        aBtn[i].onclick=function(){
+            alert(this.index);
+        }
+    }*/
+    /*(function(index){
+
+    })(i);*/
+    /*for(var i=0; i<aBtn.length; i++){
+        (function(index){
+            aBtn[i].onclick=function(){
+                alert(index);
+            }
+        })(i);
+    }*/
+    var ary=['a','b','c','d'];
+    for(var i=0; i<aBtn.length; i++){
+        aBtn[i].index=0;
+        aBtn[i].onclick=function(){
+            alert(ary[this.index%4]);
+            //this.index==ary.length-1?this.index=0:this.index++;
+            this.index++;
+           // this.index=this.index+1;
+        }
+    }
+
+
+
+
+/**************************/
+  DOM
+DOM:document object model 文档 对象 模型
+文档下所有元素属性和方法的操作；
+DOM树
+1.获取元素的方式：
+    1)document.getElementById('id名'); ID是唯一的，它只能在document下获取，如果写了多个ID，默认只能获取到第一个
+    2)context(上下文）.getElementsByTagName('标签名')；这里获取的是一系列元素，他是一个类数组，有.length属性；
+    3)context(上下文）.getElementsByName('name名字');-name就用于表单元素的获取
+    4)context(上下文）.getElementsByClassName('class名')通过className来获取元素，不兼容
+    5）document.documentElement 整个HTML
+    document.body 整个body
+    document.documentElement.clientHeight||document.body.clientHeight;
+    document.documentElement.clientWidth||document.body.clientWidth;
+    6)document.querySelector()//获取一个元素
+    document.querySelectorAll()//获取一组元素（虽然不兼容，但移动端经常用到）
+
+2.标签 元素 元素节点
+
+3.获取当前浏览器的可视宽高
+var clientWidth=document.documentElement.clientWidth||document.body.clientWidth;
+
+ var clientHeight=document.documentElement.clientHeight||document.body.clientHeight;
+
+4.动态创建元素
+ 1.创建元素：
+ document.createElement('标签名') 创建一个元素
+ obj.cloneNode(boolean)  true：连子元素一起克隆 false：只克隆他自己，不含他里面的子元素
+ 2.插入元素
+ oParent.appendChild(创建的元素) 插入到父容器的最后面；
+ oParent.insertBefore(newEle,oldeEle) 插入到父容器中指定的元素的前面；
+ 3.删除元素
+ oParent.removeChild(要删除的元素)
+
+
+
+
+
+5.节点
+node节点   nodeType  nodeName    nodevalue
+文本节点    3         #text       文本内容
+元素节点    1         大写标签名     null
+注释节点    8         #comment     注释内容
+document   9         #document    null
+
+
+6.节点之间的关系：
+  childNodes 当前元素下所有节点
+  children  当前元素下的所有元素节点（除IE8）
+  parentNode 父亲节点
+  previousSibling 上一个哥哥节点：包含所有节点
+  nextSibling 下一个弟弟节点：包含所有节点
+  firstChild 第一个元素：大儿子
+  lastChild 最后一个元素：小儿子
+
+  哥哥节点兼容问题：
+  previousSibling 上一个哥哥节点：包含所有节点
+  oLi.previousElementSibling; 获取上一个元素节点（IE6-8不兼容）
+
+  解决哥哥节点兼容问题的方法：
+var oLi=document.getElementById('li1');
+var oPrev=prev(oLi);
+ function prev(oEle){
+     //1.高级浏览器如果有支持的方法，就用高级的：避免一大堆判断，或者其他程序影响性能；
+    if(oEle.previousElementSibling){
+        return oEl.previousElementSibling
+    }
+    //低级浏览器
+    //思路：直接就能找到元素节点，就不会再找了-即跳出循环；
+    //如果找不到，就继续往上找，但我们不知道要找多少次才能找到元素节点，所以用while循环
+    //注意：每次的往上找，都是基于现在阶段往上找，而不是最初状态；
+     var pre=oEle.previousSibling;
+     while(pre&&pre.nodeType!==1){
+        pre=pre.previousSibling;
+     }
+        return pre;
+ }
+    alert(oPrev.nodeName)
+
