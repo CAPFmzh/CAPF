@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Title</title>
+
+    <!--更改前的-->
+    <!--<link rel="stylesheet" href="Css/lb&#45;&#45;fy.css">-->
+    <link rel="stylesheet" href="Css/lb-fy-修改.css">
+</head>
+<body>
+<div id="inner" class="inner">
+    <!--导航-->
+    <div class="nav" id="nav">
+        <div class="jj">
+            <div>
+                <img src="img/猎豹安全浏览器%20-%20首款双核安全浏览器_files/logo.png" alt="">
+            </div>
+            <div class="clearF"></div>
+            <ul>
+            <li><a href="LB--首页.html">首页</a></li>
+            <li><a href="javascript:;">下载</a></li>
+            <li><a href="javascript:;">论坛</a></li>
+            <li><a href="javascript:;">International</a></li>
+        </ul>
+            <div class="clearF"></div>
+        </div>
+
+    </div>
+    <!--内容-->
+    <div id="whole" class="whole" style="background: firebrick">
+        <div id="one-window" class="one">
+            <div class="one-win1 bg" id="one-win1">
+                <img src="img2/sp.png" alt="">
+            </div>
+            <a href="javascript:;">
+                立即下载
+            </a>
+            <div class="one-win2 bg" id="one-win2">
+                <img src="img2/sp.jpg" alt="">
+            </div>
+        </div>
+        <div id="two-window" class="two">
+            <div class="two-win1" id="two-win1">
+                <img src="img2/two%20(1).png" alt="">
+            </div>
+            <div class="two-win2" id="two-win2">
+                <img src="img2/two%20(3).png" alt="">
+            </div>
+            <div class="two-win3" id="two-win3">
+                <img src="img2/two%20(2).png" alt="">
+            </div>
+        </div>
+        <div id="three-window" class="three">
+            <div class="three-win1" id="three-win">
+                <img src="img2/zizi.png" alt="">
+            </div>
+            <ul class="three-win2" id="three-win2">
+                <li>
+                    <div><img src="img2/mc-a.png" alt=""></div>
+                    <p>手机免费上网</p>
+                </li>
+                <li>
+                    <div><img src="img2/mc-b.png" alt=""></div>
+                    <p>发送网页到手机</p>
+                </li>
+                <li>
+                    <div><img src="img2/mc-c.png" alt=""></div>
+                    <p>游戏助手&小游戏合体</p>
+                </li>
+            </ul>
+        </div>
+        <div id="four-window" class="four">
+            <div class="four-win1" id="four-win1">
+                <img src="img2/t-5.png" alt="">
+            </div>
+            <a href="javascript:;">
+                立即下载
+            </a>
+        </div>
+    </div>
+    <!--焦点-->
+    <ul id="focus" class="focus">
+        <li class="BG"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+</body>
+</html>
+<!--DOM库-->
+<script type="text/javascript" src="JS/utils.js"></script>
+<!--动画库-->
+<script type="text/javascript" src="JS/move.js"></script>
+<!--事件库-->
+<script type="text/javascript" src="JS/event.js"></script>
+<!--实现效果的js代码-->
+<script>
+    css();
+    MouseWheel();
+
+    //设置盒子为可视窗户的高度
+    function css() {
+        var win = document.documentElement.clientHeight || document.body.clientHeight;
+        var win1=win
+        var oInner = document.getElementById('inner');
+        var oWhole = document.getElementById('whole');
+        var oONE = document.getElementById('one-window');
+        var oTWO = document.getElementById('two-window');
+        var oThree = document.getElementById('three-window');
+        var oFour = document.getElementById('four-window');
+
+
+
+         oInner.style.height = win + 'px';
+        oWhole.style.height = win * 4 + 'px';
+        oONE.style.height = win + 'px';
+        oTWO.style.height = win + 'px';
+        oThree.style.height = win + 'px';
+        oFour.style.height = win + 'px';
+        if (win1<win){
+
+                oInner.style.height = win + 'px';
+                oWhole.style.height = win * 4 + 'px';
+                oONE.style.height = win + 'px';
+                oTWO.style.height = win + 'px';
+                oThree.style.height = win + 'px';
+                oFour.style.height = win + 'px';
+
+        }
+
+    }
+
+    //鼠标滚轮滚动切换的效果
+    function MouseWheel() {
+        var oInner = document.getElementById('inner');
+        var oBanner = document.getElementById('whole');
+        var aDiv = oBanner.children;
+        var oUl = document.getElementById('focus');
+        var oLis = oUl.getElementsByTagName('li');
+
+        var oneWin1 = document.getElementById('one-win1');
+        var oneWin2 = document.getElementById('one-win2');
+        var twoWin1 = document.getElementById('two-win1');
+        var twoWin2 = document.getElementById('two-win2');
+        var twoWin3 = document.getElementById('two-win3');
+        var threeWin1 = document.getElementById('three-win');
+        var threeWin2 = document.getElementById('three-win2');
+        var fourWin1 = document.getElementById('four-win1');
+
+        //进入页面后使第一张显示
+        var stpe = 0;
+        utils.css(aDiv[0], 'opacity', 1);
+        zhufengAnimate(aDiv[0], {'opacity': 1}, 800);
+
+        //绑定鼠标滚轮事件
+        on(oInner, 'mousewheel', prevent);
+
+        //在一定时间内阻止鼠标滚轮的默认行为
+        var flage = 1;
+        function prevent() {
+            if (!flage) {
+                return
+            }
+            roll();
+            flage = false;
+            window.setTimeout(function () {
+                flage = 1;
+            }, 800);
+
+        }
+
+        //判断鼠标滚轮向上还是向下
+        function roll() {
+            var cc = event.wheelDelta;
+            if (cc <= -120) {//判断鼠标向下滚动
+                if (stpe >= aDiv.length - 1) {//>=3
+                    stpe = aDiv.length - 2
+                }
+                stpe += 1;
+                //console.log(stpe);
+                //bottom();
+                qh();
+                Carousel();
+                FocusSwitch()
+            }
+            else if (cc >= 120) {
+                if (stpe <= 0) {//<=0
+                    stpe = 1
+                }
+                stpe--;
+                //console.log(stpe);
+                //top();
+                qh();
+                Carousel();
+                FocusSwitch()
+            }
+        }
+
+        //鼠标滚轮滚动时的轮播效果--渐隐渐现
+        function Carousel() {
+            for (var i = 0; i < aDiv.length; i++) {
+                var curDiv = aDiv[i];
+                curDiv.index = i;
+                if (stpe === curDiv.index) {
+                    utils.css(curDiv, 'zIndex', 1);
+                    zhufengAnimate(curDiv, {'opacity': 1}, 800,
+                            function () {
+                                var siblings = utils.siblings(this);
+                                for (var i = 0; i < siblings.length; i++) {
+                                    utils.css(siblings[i], 'opacity', 0);
+                                    var ss=utils.css(siblings[i], 'opacity', 0);
+
+                                }
+                            });
+                    continue;
+                }
+                utils.css(curDiv, 'zIndex', 0);
+            }
+        }
+
+        //鼠标滚轮滚动切换焦点
+        function FocusSwitch() {
+            for (var j = 0; j < oLis.length; j++) {
+                var cur = oLis[j];
+                if (stpe === j) {
+                    utils.addClass(cur, 'BG');
+                } else {
+                    utils.removeClass(cur, 'BG');
+                }
+            }
+            if (stpe < 0) {
+                utils.addClass(oLis[0], 'BG')
+            }
+            if (stpe > 3) {
+                utils.addClass(oLis[3], 'BG')
+            }
+        }
+
+        //鼠标点检焦点切换页面
+        (function () {
+            var oUl = document.getElementById('focus');
+            var oLis = oUl.getElementsByTagName('li');
+            for (var i = 0; i < oLis.length; i++) {
+                var curLi=oLis[i];
+                curLi.index = i;
+                curLi.onclick = function () {
+
+                    stpe = this.index;
+                    qh();
+                    for (var i = 0; i < aDiv.length; i++) {
+                        var curDiv = aDiv[i];
+                        curDiv.index = i;
+                        if (curDiv.index === stpe) {
+                            utils.css(curDiv, 'zIndex', 1);
+                            zhufengAnimate(curDiv, {'opacity': 1}, 800, function () {
+                                var siblings = utils.siblings(this);
+                                for (var i = 0; i < siblings.length; i++) {
+                                    utils.css(siblings[i], 'opacity', 0);
+                                }
+                            });
+                            continue;
+                        }
+                        utils.css(curDiv, 'zIndex', 0);
+                    }
+                    FocusSwitch()
+                }
+            }
+        })();
+        /*//向下滚动的时的动画
+        function bottom(){
+            //1&2
+            if(stpe==1) {
+                //1
+                utils.removeClass(oneWin1, 'bg');
+                utils.removeClass(oneWin2, 'bg');
+
+                //2
+                utils.addClass(twoWin1, 'bg');
+                utils.addClass(twoWin2, 'bg');
+                utils.addClass(twoWin3, 'bg');
+            }else {
+                utils.removeClass(twoWin1, 'bg');
+                utils.removeClass(twoWin2, 'bg');
+                utils.removeClass(twoWin3, 'bg');
+            }
+            //3
+            if (stpe==2){
+                utils.addClass(threeWin1, 'bg');
+                utils.addClass(threeWin2, 'bg');
+            }else {
+                utils.removeClass(threeWin1, 'bg');
+                utils.removeClass(threeWin2, 'bg');
+            }
+            //4
+            if (stpe==3){
+                utils.addClass(fourWin1, 'bg');
+            }else {
+                utils.removeClass(fourWin1, 'bg');
+            }
+        }
+
+        //向上滚动的时的动画
+        function top(){
+            //1&2
+            if(stpe==0){
+                //1
+                utils.addClass(oneWin1, 'bg');
+                utils.addClass(oneWin2, 'bg');
+
+                //2
+                utils.removeClass(twoWin1, 'bg');
+                utils.removeClass(twoWin2, 'bg');
+                utils.removeClass(twoWin3, 'bg');
+
+            }else if(stpe==1) {
+                utils.removeClass(oneWin1, 'bg');
+                utils.removeClass(oneWin2, 'bg');
+
+                utils.addClass(twoWin1, 'bg');
+                utils.addClass(twoWin2, 'bg');
+                utils.addClass(twoWin3, 'bg')
+            }
+            //3
+            if (stpe==2){
+                utils.addClass(threeWin1, 'bg');
+                utils.addClass(threeWin2, 'bg');
+            }else {
+                utils.removeClass(threeWin1, 'bg');
+                utils.removeClass(threeWin2, 'bg');
+            }
+            //4
+            if (stpe==3){
+                utils.addClass(fourWin1, 'bg');
+            }else {
+                utils.removeClass(fourWin1, 'bg');
+            }
+        }*/
+        //向下滚动的时的动画//向上滚动的时的动画//点击切换时的动画效果//
+        function qh(){
+
+    /*stpe在每个函数中的值都是不样的，但是只要stpe的值==0/1/2/3就可添加其class名*/
+            if(stpe==0){//当stpe==0说明是第一个显示的盒子---第一屏
+                utils.addClass(oneWin1,'bg');
+                utils.addClass(oneWin2,'bg');
+            }else {
+                utils.removeClass(oneWin1,'bg');
+                utils.removeClass(oneWin2,'bg');
+            }
+            if(stpe==1){//当stpe==1说明是第二个显示的盒子---第二屏
+                utils.addClass(twoWin1, 'bg');
+                utils.addClass(twoWin2, 'bg');
+                utils.addClass(twoWin3, 'bg')
+            }else {
+                utils.removeClass(twoWin1, 'bg');
+                utils.removeClass(twoWin2, 'bg');
+                utils.removeClass(twoWin3, 'bg');
+            }
+            if(stpe==2){//当stpe==2说明是第三个显示的盒子---第三屏
+                utils.addClass(threeWin1, 'bg');
+                utils.addClass(threeWin2, 'bg');
+            }else {
+                utils.removeClass(threeWin1, 'bg');
+                utils.removeClass(threeWin2, 'bg');
+            }
+            if(stpe==3){//当stpe==3说明是第四个显示的盒子---第四屏
+                utils.addClass(fourWin1, 'bg');
+            }else {
+                utils.removeClass(fourWin1, 'bg');
+            }
+
+        }
+    }
+</script>
+
+
+<!--项目的每步更改-->
+<!--/*function mouseWheel() {
+     var oInner = document.getElementById('inner');
+     var oBanner = document.getElementById('whole');
+     var oneWin1 = document.getElementById('one-win1');
+     var oneWin2 = document.getElementById('one-win2');
+     var aDiv = oBanner.children;
+     var oUl = document.getElementById('focus');
+     var oLis = oUl.getElementsByTagName('li');
+
+     var stpe = 0;
+     utils.css(aDiv[0], 'opacity', 1);
+     zhufengAnimate(aDiv[0], {'opacity': 1}, 800);
+     //绑定鼠标滚轮事件
+     on(oInner, 'mousewheel', prevent);
+
+     //在一定时间内阻止鼠标滚轮的默认行为
+     var flage = 1;
+     function prevent() {
+     if (!flage) {
+     return
+     }
+     roll();
+     flage = false;
+     window.setTimeout(function () {
+     flage = 1;
+     }, 700);
+
+     }
+
+     //判断鼠标滚轮向上还是向下
+     function roll() {
+     var cc = event.wheelDelta;
+     if (cc <= -120) {//判断鼠标向下滚动
+     if (stpe >= aDiv.length - 1) {//>=3
+     stpe = aDiv.length - 2
+     }
+     stpe += 1;
+     Carousel();
+     FocusSwitch()
+     }
+     else if (cc >= 120) {
+     if (stpe <= 0) {//<=0
+     stpe = 1
+     }
+     stpe--;
+     Carousel();
+     FocusSwitch()
+     }
+     }
+
+     //鼠标滚轮滚动时的轮播效果--渐隐渐现
+     function Carousel() {
+     for (var i = 0; i < aDiv.length; i++) {
+     var curDiv = aDiv[i];
+     curDiv.index = i;
+     if (stpe === curDiv.index) {
+     utils.css(curDiv, 'zIndex', 1);
+     zhufengAnimate(curDiv, {'opacity': 1}, 800, function () {
+     var siblings = utils.siblings(this);
+     for (var i = 0; i < siblings.length; i++) {
+     utils.css(siblings[i], 'opacity', 0);
+
+     }
+     });
+     continue;
+     }
+     utils.css(curDiv, 'zIndex', 0);
+     }
+
+     }
+
+     //鼠标滚轮滚动切换焦点
+     function FocusSwitch() {
+     for (var j = 0; j < oLis.length; j++) {
+     var cur = oLis[j];
+     if (stpe === j) {
+     utils.addClass(cur, 'BG');
+     } else {
+     utils.removeClass(cur, 'BG');
+     }
+     }
+     if (stpe < 0) {
+     utils.addClass(oLis[0], 'BG')
+     }
+     if (stpe > 3) {
+     utils.addClass(oLis[3], 'BG')
+     }
+     }
+
+     //鼠标点检焦点切换页面
+     (function () {
+     var oUl = document.getElementById('focus');
+     var oLis = oUl.getElementsByTagName('li');
+     for (var i = 0; i < oLis.length; i++) {
+     oLis[i].index = i;
+     oLis[i].onclick = function () {
+     stpe = this.index;
+     for (var i = 0; i < aDiv.length; i++) {
+     var curDiv = aDiv[i];
+     curDiv.index = i;
+     if (curDiv.index === stpe) {
+     utils.css(curDiv, 'zIndex', 1);
+     zhufengAnimate(curDiv, {'opacity': 1}, 800, function () {
+     var siblings = utils.siblings(this);
+     for (var i = 0; i < siblings.length; i++) {
+     utils.css(siblings[i], 'opacity', 0);
+     }
+     });
+     continue;
+     }
+     utils.css(curDiv, 'zIndex', 0);
+     }
+     FocusSwitch()
+     }
+     }
+     })();
+
+
+     }*/
+    /*function Tc() {
+     var oInner = document.getElementById('inner');
+     var oBanner = document.getElementById('whole');
+     var aDiv = oBanner.children;
+     var oUl = document.getElementById('focus');
+     var oLis = oUl.getElementsByTagName('li');
+
+     var oneWin1 = document.getElementById('one-win1');
+     var oneWin2 = document.getElementById('one-win2');
+     var twoWin1 = document.getElementById('two-win1');
+     var twoWin2 = document.getElementById('two-win2');
+     var twoWin3 = document.getElementById('two-win3');
+     var threeWin1 = document.getElementById('three-win');
+     var threeWin2 = document.getElementById('three-win2');
+     var fourWin1 = document.getElementById('four-win1');
+
+     var stpe = 0;
+     utils.css(aDiv[0], 'opacity', 1);
+     zhufengAnimate(aDiv[0], {'opacity': 1}, 800);
+
+
+
+     //绑定鼠标滚轮事件
+     on(oInner, 'mousewheel', prevent);
+
+     //在一定时间内阻止鼠标滚轮的默认行为
+     var flage = 1;
+     function prevent() {
+     if (!flage) {
+     return
+     }
+     roll();
+     flage = false;
+     window.setTimeout(function () {
+     flage = 1;
+     }, 700);
+
+     }
+
+     //判断鼠标滚轮向上还是向下
+     function roll() {
+     var cc = event.wheelDelta;
+     if (cc <= -120) {//判断鼠标向下滚动
+     if (stpe >= aDiv.length - 1) {//>=3
+     stpe = aDiv.length - 2
+     }
+     stpe += 1;
+     console.log(stpe);
+     //1&2
+     if(stpe==1) {
+     //1
+     utils.removeClass(oneWin1, 'bg');
+     utils.removeClass(oneWin2, 'bg');
+
+     //2
+     utils.addClass(twoWin1, 'bg');
+     utils.addClass(twoWin2, 'bg');
+     utils.addClass(twoWin3, 'bg');
+     }else {
+     utils.removeClass(twoWin1, 'bg');
+     utils.removeClass(twoWin2, 'bg');
+     utils.removeClass(twoWin3, 'bg');
+     }
+     //3
+     if (stpe==2){
+     utils.addClass(threeWin1, 'bg');
+     utils.addClass(threeWin2, 'bg');
+     }else {
+     utils.removeClass(threeWin1, 'bg');
+     utils.removeClass(threeWin2, 'bg');
+     }
+     //4
+     if (stpe==3){
+     utils.addClass(fourWin1, 'bg');
+     }else {
+     utils.removeClass(fourWin1, 'bg');
+     }
+     Carousel();
+     FocusSwitch()
+     }
+     else if (cc >= 120) {
+     if (stpe <= 0) {//<=0
+     stpe = 1
+     }
+     stpe--;
+     console.log(stpe);
+     //1&2
+     if(stpe==0){
+     //1
+     utils.addClass(oneWin1, 'bg');
+     utils.addClass(oneWin2, 'bg');
+
+     //2
+     utils.removeClass(twoWin1, 'bg');
+     utils.removeClass(twoWin2, 'bg');
+     utils.removeClass(twoWin3, 'bg');
+
+     }else if(stpe==1) {
+     utils.removeClass(oneWin1, 'bg');
+     utils.removeClass(oneWin2, 'bg');
+
+     utils.addClass(twoWin1, 'bg');
+     utils.addClass(twoWin2, 'bg');
+     utils.addClass(twoWin3, 'bg')
+     }
+     //3
+     if (stpe==2){
+     utils.addClass(threeWin1, 'bg');
+     utils.addClass(threeWin2, 'bg');
+     }else {
+     utils.removeClass(threeWin1, 'bg');
+     utils.removeClass(threeWin2, 'bg');
+     }
+     //4
+     if (stpe==3){
+     utils.addClass(fourWin1, 'bg');
+     }else {
+     utils.removeClass(fourWin1, 'bg');
+     }
+
+     Carousel();
+     FocusSwitch()
+     }
+     }
+
+
+     //鼠标滚轮滚动时的轮播效果--渐隐渐现
+     function Carousel() {
+     for (var i = 0; i < aDiv.length; i++) {
+     var curDiv = aDiv[i];
+     curDiv.index = i;
+     if (stpe === curDiv.index) {
+     utils.css(curDiv, 'zIndex', 1);
+     zhufengAnimate(curDiv, {'opacity': 1}, 800,
+     function () {
+     var siblings = utils.siblings(this);
+     for (var i = 0; i < siblings.length; i++) {
+     utils.css(siblings[i], 'opacity', 0);
+     var ss=utils.css(siblings[i], 'opacity', 0);
+
+     }
+     });
+     continue;
+     }
+     utils.css(curDiv, 'zIndex', 0);
+     }
+
+     }
+
+     //鼠标滚轮滚动切换焦点
+     function FocusSwitch() {
+     for (var j = 0; j < oLis.length; j++) {
+     var cur = oLis[j];
+     if (stpe === j) {
+     utils.addClass(cur, 'BG');
+     } else {
+     utils.removeClass(cur, 'BG');
+     }
+     }
+     if (stpe < 0) {
+     utils.addClass(oLis[0], 'BG')
+     }
+     if (stpe > 3) {
+     utils.addClass(oLis[3], 'BG')
+     }
+     }
+
+     //鼠标点检焦点切换页面
+     (function () {
+     var oUl = document.getElementById('focus');
+     var oLis = oUl.getElementsByTagName('li');
+     for (var i = 0; i < oLis.length; i++) {
+     oLis[i].index = i;
+     oLis[i].onclick = function () {
+     stpe = this.index;
+     for (var i = 0; i < aDiv.length; i++) {
+     var curDiv = aDiv[i];
+     curDiv.index = i;
+     if (curDiv.index === stpe) {
+     utils.css(curDiv, 'zIndex', 1);
+     zhufengAnimate(curDiv, {'opacity': 1}, 800, function () {
+     var siblings = utils.siblings(this);
+     for (var i = 0; i < siblings.length; i++) {
+     utils.css(siblings[i], 'opacity', 0);
+     }
+     });
+     continue;
+     }
+     utils.css(curDiv, 'zIndex', 0);
+     }
+     FocusSwitch()
+     }
+     }
+     })();
+     }*/-->
+
+           <!------end--------------end--------------end---------------end----------------end--------->
+
+
+
+
