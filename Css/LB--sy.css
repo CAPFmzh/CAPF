@@ -59,8 +59,8 @@ html,body{
     z-index: 2;
 }
 #inner .nav .jj{
-    width: 53%;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0 0 0 18%;
     position: relative;
     display: block;
 }
@@ -68,11 +68,15 @@ html,body{
     width: 27%;
     height: 76%;
     display: inline-block;
-    margin-top: 2%;
+    margin-top: 1%;
     vertical-align: top;
+    margin-right: 7%;
+    margin-left: 5%;
+}
+#inner .nav div img{
+    display: block;
 }
 #inner .nav ul {
-    margin-left: 317px;
     display: inline-block;
     width: 401px;
     height: 64px;
